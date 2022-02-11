@@ -4,7 +4,9 @@ import axios from 'axios';
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-const data = axios.get('https://api.github.com/users/Michael-Subbarao');
+axios.get('https://api.github.com/users/Michael-Subbarao')
+.then(bio => {document.querySelector('.cards').appendChild(createBio(bio.data));})
+.catch(error =>console.error(error))
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -30,7 +32,17 @@ const data = axios.get('https://api.github.com/users/Michael-Subbarao');
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'];
+
+  followersArray.forEach(name => {
+    axios.get('https://api.github.com/users/' + name)
+.then(bio => {document.querySelector('.cards').appendChild(createBio(bio.data));})
+.catch(error =>console.error(error))
+  })
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -52,7 +64,7 @@ const followersArray = [];
     </div>
 */
 
-const createBio = (data) =>{
+function createBio(data){
   //elements
   const card = document.createElement("div"); 
     const userImg = document.createElement("img"); 
